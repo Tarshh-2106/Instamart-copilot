@@ -1,0 +1,181 @@
+
+DATASET SHAPES
+
+{'customers': (1200, 5), 'orders': (12965, 9), 'products': (40, 4), 'tickets': (164, 5)}
+
+
+
+CUSTOMERS MISSING VALUES
+
+customer_id     0
+city            0
+signup_date     0
+age            61
+gender         30
+dtype: int64
+
+
+
+CUSTOMERS DUPLICATE ROWS
+
+0
+
+
+
+ORDERS MISSING VALUES
+
+order_id               0
+customer_id            0
+product_id             0
+quantity               0
+order_ts               0
+status                 0
+discount_pct           0
+order_amount         118
+delivery_minutes    2629
+dtype: int64
+
+
+
+ORDERS DUPLICATE ROWS
+
+0
+
+
+
+PRODUCTS MISSING VALUES
+
+product_id      0
+product_name    0
+category        0
+price_inr       0
+dtype: int64
+
+
+
+PRODUCTS DUPLICATE ROWS
+
+0
+
+
+
+TICKETS MISSING VALUES
+
+ticket_id        0
+customer_id      0
+order_id         8
+text             4
+true_category    0
+dtype: int64
+
+
+
+TICKETS DUPLICATE ROWS
+
+0
+
+
+
+ORDER STATUS COUNTS
+
+status
+completed    11110
+cancelled     1199
+pending        656
+Name: count, dtype: int64
+
+
+
+ORDER AMOUNT SUMMARY
+
+count    12847.000000
+mean       269.740196
+std        432.290310
+min         12.000000
+25%         63.000000
+50%        134.400000
+75%        296.650000
+max       3998.000000
+Name: order_amount, dtype: float64
+
+
+
+DELIVERY TIME SUMMARY
+
+count    10336.000000
+mean        27.547310
+std         13.205249
+min          8.000000
+25%         19.000000
+50%         25.000000
+75%         32.000000
+max         75.000000
+Name: delivery_minutes, dtype: float64
+
+
+
+TOTAL ORDER AMOUNT BY STATUS
+
+status
+cancelled     333331.75
+completed    2968622.15
+pending       163398.40
+Name: order_amount, dtype: float64
+
+
+
+AVERAGE DELIVERY TIME BY STATUS
+
+status
+cancelled      NaN
+completed    27.55
+pending        NaN
+Name: delivery_minutes, dtype: float64
+
+
+
+MONTHLY ORDER COUNTS
+
+order_ts
+2025-04    2156
+2025-05    2236
+2025-06    2059
+2025-07    2193
+2025-08    2197
+2025-09    2124
+dtype: int64
+
+
+
+TOP 10 CUSTOMERS BY COMPLETED ORDER AMOUNT
+
+customer_id
+C0693    14766.55
+C0291    13742.60
+C0488    13187.50
+C0082    12856.20
+C0743    12730.05
+C0525    12719.70
+C0699    12471.80
+C0267    12210.25
+C0332    11806.40
+C0512    11617.65
+Name: order_amount, dtype: float64
+
+
+
+TOP 10 PRODUCTS BY QUANTITY
+
+   product_id  quantity  ... category price_inr
+20       P021       982  ...   Snacks        56
+8        P009       976  ...    Dairy        29
+22       P023       961  ...   Snacks       210
+23       P024       955  ...   Snacks        90
+3        P004       943  ...  Grocery       155
+17       P018       940  ...   Snacks        60
+11       P012       937  ...    Dairy        58
+6        P007       916  ...  Grocery       120
+4        P005       913  ...  Grocery        48
+21       P022       910  ...   Snacks        45
+
+[10 rows x 5 columns]

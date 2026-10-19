@@ -1,0 +1,54 @@
+# Instamart SQL Analysis Results
+
+## 1. Database Record Counts
+- Customers: 1,200
+- Products: 40
+- Orders: 12,965
+- Tickets: 164
+
+## 2. Order Status Distribution
+- Completed: 11,110
+- Cancelled: 1,199
+- Pending: 656
+
+## 3. Monthly Order Volume
+- April 2025: 2,156
+- May 2025: 2,236
+- June 2025: 2,059
+- July 2025: 2,193
+- August 2025: 2,197
+- September 2025: 2,124
+
+## 4. Order Amount by Status
+- Completed: ₹2,968,622.15
+- Cancelled: ₹333,331.75
+- Pending: ₹163,398.40
+
+These are recorded order amounts grouped by status, not necessarily realized revenue.
+
+## 5. Average Delivery Time
+- Completed orders: 27.17 minutes
+
+## 6. Top 10 Customers by Completed-Order Spending
+1. C0693 — ₹14,766.55
+2. C0291 — ₹13,742.60
+3. C0488 — ₹13,187.50
+4. C0082 — ₹12,856.20
+5. C0743 — ₹12,730.05
+6. C0525 — ₹12,719.70
+7. C0699 — ₹12,471.80
+8. C0267 — ₹12,210.25
+9. C0332 — ₹11,806.40
+10. C0512 — ₹11,617.65
+
+## 7. Top 10 Products by Quantity Ordered
+1. P021 — Instant Noodles 4 Pack: 982
+2. P009 — Toned Milk 500ml: 976
+3. P023 — Peanut Butter 340g: 961
+4. P024 — Cold Coffee Can 180ml: 955
+5. P004 — Sunflower Oil 1L: 943
+6. P018 — Namkeen 200g: 940
+7. P012 — Butter 100g: 937
+8. P007 — Tea Powder 250g: 916
+9. P005 — Sugar 1kg: 913
+10. P022 — Popcorn 100g: 910
