@@ -8,3 +8,6 @@ __pycache__/
 .mypy_cache/
 *.tmp
 data/instamart.db-journal
+
+src/README.md
+state/
