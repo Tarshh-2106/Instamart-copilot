@@ -17,13 +17,20 @@ def redact(text):
         text
     )
 
+    text = re.sub(
+        r"\bORD-\d{6}\b",
+        "[ORDER_ID]",
+        text,
+        flags=re.IGNORECASE
+    )
+
     return text
 
 if __name__ == "__main__":
     samples = [
         "Call 7766326255 about my order.",
         "Email help@example.com for assistance.",
-        "Call me on 9562272031 or email customer@example.com."
+        "Refund for ORD-123456, call 9562272031 or email customer@example.com."
     ]
 
     for s in samples:

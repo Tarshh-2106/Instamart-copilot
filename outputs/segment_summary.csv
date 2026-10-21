@@ -1,5 +1,5 @@
-segment,recency,frequency,monetary
-0,108.84,2.22,728.58
-1,28.8,3.77,1046.55
-2,8.86,19.22,3377.93
-3,23.64,6.77,7115.12
+segment_name,recency,frequency,monetary
+Frequent Recent Customers,9.77,19.4,3410.02
+High Spending / Premium,25.12,6.77,7129.7
+Lapsed / High Risk,110.04,2.2,685.99
+Occasional Customers,29.86,3.77,1057.62

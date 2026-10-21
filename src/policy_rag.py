@@ -1,10 +1,11 @@
 
+
 import os
-import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-folder = "data/policies"
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+folder = os.path.join(root, "data", "policies")
 
 def load_policies():
     docs = []
@@ -16,18 +17,17 @@ def load_policies():
             continue
 
         with open(path, "r", encoding="utf-8") as f:
-            text = f.read().strip()
+            words = f.read().split()
 
-        parts = re.split(r"(?<=[.!?])\s+", text)
+        for start in range(0, len(words), 30):
+            chunk = words[start:start + 40]
 
-        for part in parts:
-            part = part.strip()
-
-            if part and not part.lower().endswith(" policy."):
+            if chunk:
                 docs.append({
                     "source": name,
-                    "text": part
+                    "text": " ".join(chunk)
                 })
+
     return docs
 
 docs = load_policies()
@@ -39,16 +39,22 @@ matrix = vectorizer.fit_transform(texts)
 def search_policy(question, k=5):
     q = vectorizer.transform([question])
     scores = cosine_similarity(q, matrix).flatten()
-    ids = scores.argsort()[::-1][:k]
+    ids = scores.argsort()[::-1]
 
     results = []
 
     for i in ids:
+        if scores[i] <= 0:
+            continue
+
         results.append({
             "source": docs[i]["source"],
             "text": docs[i]["text"],
             "score": round(float(scores[i]), 3)
         })
+
+        if len(results) == k:
+            break
 
     return results
 
@@ -66,9 +72,15 @@ if __name__ == "__main__":
             print("Please enter a question.")
             continue
 
+        results = search_policy(question)
+
+        if not results:
+            print("No relevant policy passages found.")
+            continue
+
         print("\nTop matching policy passages:")
 
-        for result in search_policy(question):
+        for result in results:
             print(
                 f"\nSource: {result['source']}"
                 f"\nScore: {result['score']}"

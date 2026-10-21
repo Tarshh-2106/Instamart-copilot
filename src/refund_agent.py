@@ -63,65 +63,62 @@ def calculate_refund(order_amount, delivery_minutes):
     return {"refund_inr": round(refund, 2)}
 
 
-def run_tool(name, args):
-    if not isinstance(args, dict):
-        return {"error": "Tool arguments must be an object"}
 
-    if name == "get_order":
-        return get_order(args.get("order_id"))
+def search_policy_tool(args):
+    query = args.get("query", "")
 
-    if name == "search_policy":
-        query = args.get("query", "")
+    if not isinstance(query, str) or not query.strip():
+        return {"error": "Policy query is required"}
 
-        if not isinstance(query, str) or not query.strip():
-            return {"error": "Policy query is required"}
+    results = search_policy(query, k=3)
 
-        results = search_policy(query, k=3)
+    if not results or results[0]["score"] == 0:
+        return {"error": "No relevant policy information found"}
 
-        if not results or results[0]["score"] == 0:
-            return {"error": "No relevant policy information found"}
-
-        return {
-            "results": [
-                {
-                    "source": r["source"],
-                    "text": r["text"],
-                    "score": r["score"]
-                }
-                for r in results
-            ]
-        }
-
-    if name == "calculate_refund":
-        return calculate_refund(
-            args.get("order_amount"),
-            args.get("delivery_minutes")
-        )
-
-    if name == "issue_refund":
-        return {
-            "status": "approved_for_mock_processing",
-            "order_id": args.get("order_id"),
-            "refund_inr": args.get("refund_inr")
-        }
-
-    if name == "escalate_to_human":
-        return {
-            "status": "escalation_recorded",
-            "order_id": args.get("order_id"),
-            "refund_inr": args.get("refund_inr")
-        }
-
-    return {"error": "Unknown tool"}
+    return {
+        "results": [
+            {
+                "source": r["source"],
+                "text": r["text"],
+                "score": r["score"]
+            }
+            for r in results
+        ]
+    }
 
 
-def run_agent(question, session_id=None, resume=False):
-    if not isinstance(question, str) or not question.strip():
-        return "NEEDS_INFO: please describe your refund request."
+def issue_refund(args):
+    return {
+        "status": "approved_for_mock_processing",
+        "order_id": args.get("order_id"),
+        "refund_inr": args.get("refund_inr")
+    }
 
-    mock_llm.reset()
 
-    tools = [
+def escalate_to_human(args):
+    return {
+        "status": "escalation_recorded",
+        "order_id": args.get("order_id"),
+        "refund_inr": args.get("refund_inr")
+    }
+
+
+def calculate_refund_tool(args):
+    return calculate_refund(
+        args.get("order_amount"),
+        args.get("delivery_minutes")
+    )
+
+
+TOOL_MAP = {
+    "get_order": lambda args: get_order(args.get("order_id")),
+    "search_policy": search_policy_tool,
+    "calculate_refund": calculate_refund_tool,
+    "issue_refund": issue_refund,
+    "escalate_to_human": escalate_to_human
+}
+
+TOOLS_SPEC = [
         {
             "type": "function",
             "function": {
@@ -197,7 +194,26 @@ def run_agent(question, session_id=None, resume=False):
                 }
             }
         }
-    ]
+]
+
+def run_tool(name, args):
+    if not isinstance(args, dict):
+        return {"error": "Tool arguments must be an object"}
+
+    tool = TOOL_MAP.get(name)
+
+    if tool is None:
+        return {"error": "Unknown tool"}
+
+    return tool(args)
+
+
+
+def run_agent(question, session_id=None, resume=False):
+    if not isinstance(question, str) or not question.strip():
+        return "NEEDS_INFO: please describe your refund request."
+
+    mock_llm.reset()
 
 
     if resume:
@@ -242,7 +258,7 @@ def run_agent(question, session_id=None, resume=False):
 
     for step in range(start_step, max_steps):
         try:
-            response = mock_llm.chat(messages, tools=tools)
+            response = mock_llm.chat(messages, tools=TOOLS_SPEC)
             message = response.choices[0].message
         except Exception as e:
             return f"SAFE_FALLBACK: agent call failed ({type(e).__name__})."

@@ -1,3 +1,4 @@
+
 import os
 import pandas as pd
 
@@ -14,7 +15,7 @@ orders["order_amount"] = pd.to_numeric(orders["order_amount"], errors="coerce")
 orders = orders[orders["status"].eq("completed")].copy()
 orders = orders.dropna(subset=["customer_id", "order_ts", "order_amount"])
 
-ref_date = orders["order_ts"].max().normalize() + pd.Timedelta(days=1)
+ref_date = pd.Timestamp("2025-10-01")
 
 rfm = orders.groupby("customer_id").agg(
     last_order=("order_ts", "max"),
@@ -22,12 +23,13 @@ rfm = orders.groupby("customer_id").agg(
     monetary=("order_amount", "sum")
 )
 
-rfm["recency"] = (ref_date - rfm["last_order"]).dt.days
+rfm["recency"] = (ref_date - rfm["last_order"].dt.normalize()).dt.days
 rfm = rfm[["recency", "frequency", "monetary"]].reset_index()
 
 path = os.path.join(out, "rfm_features.csv")
 rfm.to_csv(path, index=False)
 
+print("Snapshot date:", ref_date.date())
 print("RFM features created:", len(rfm), "customers")
 print("\nSummary:")
 print(rfm[["recency", "frequency", "monetary"]].describe().round(2))

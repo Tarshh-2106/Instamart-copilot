@@ -1,0 +1,3 @@
+model,best_cv_f1,test_accuracy,test_precision,test_recall,test_f1,test_roc_auc,best_params
+Logistic Regression,0.7066,0.6983,0.5664,0.9101,0.6983,0.789,{'clf__C': 10}
+Random Forest,0.6981,0.6767,0.5538,0.809,0.6575,0.7849,"{'clf__max_depth': 10, 'clf__min_samples_leaf': 1, 'clf__n_estimators': 200}"
