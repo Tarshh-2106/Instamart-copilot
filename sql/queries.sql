@@ -1,73 +1,70 @@
-
-SELECT 'customers' AS table_name, COUNT(*) AS total_rows FROM customers
-UNION ALL
-SELECT 'products', COUNT(*) FROM products
-UNION ALL
-SELECT 'orders', COUNT(*) FROM orders
-UNION ALL
-SELECT 'tickets', COUNT(*) FROM tickets;
-
-SELECT status, COUNT(*) AS total_orders
+-- Q1: WHERE and HAVING
+SELECT customer_id, SUM(order_amount) AS qualifying_spend
 FROM orders
-GROUP BY status
-ORDER BY total_orders DESC;
-
-SELECT substr(order_ts, 1, 7) AS order_month, COUNT(*) AS total_orders
-FROM orders
-GROUP BY order_month
-ORDER BY order_month;
-
-SELECT status, COUNT(*) AS total_orders,
-       COUNT(order_amount) AS orders_with_amount,
-       ROUND(SUM(order_amount), 2) AS total_amount
-FROM orders
-GROUP BY status
-ORDER BY status;
-
-SELECT status, ROUND(AVG(delivery_minutes), 2) AS avg_delivery_minutes
-FROM orders
-WHERE delivery_minutes IS NOT NULL
-GROUP BY status;
-
-SELECT customer_id, ROUND(SUM(order_amount), 2) AS total_spending,
-       COUNT(*) AS completed_orders
-FROM orders
-WHERE status = 'completed'
+WHERE status = 'completed' AND order_amount > 500
 GROUP BY customer_id
-ORDER BY total_spending DESC
-LIMIT 10;
+HAVING SUM(order_amount) > 8000
+ORDER BY qualifying_spend DESC;
 
-SELECT p.product_id, p.product_name, SUM(o.quantity) AS total_quantity
+-- Q2: revenue by city and product category
+SELECT c.city, p.category, ROUND(SUM(o.order_amount), 2) AS revenue_inr
 FROM orders o
-JOIN products p ON o.product_id = p.product_id
-GROUP BY p.product_id, p.product_name
-ORDER BY total_quantity DESC
-LIMIT 10;
+JOIN customers c ON c.customer_id = o.customer_id
+JOIN products p ON p.product_id = o.product_id
+WHERE o.status = 'completed'
+GROUP BY c.city, p.category
+ORDER BY c.city, p.category;
 
-SELECT COUNT(*) AS missing_order_amounts
-FROM orders
-WHERE order_amount IS NULL;
+-- Q3: products priced above the catalogue average
+SELECT product_id, product_name, price_inr
+FROM products
+WHERE price_inr > (SELECT AVG(price_inr) FROM products)
+ORDER BY price_inr DESC;
 
-SELECT COUNT(*) AS missing_delivery_minutes
-FROM orders
-WHERE delivery_minutes IS NULL;
+-- Q4: customers with no completed order
+SELECT c.customer_id
+FROM customers c
+LEFT JOIN orders o
+  ON o.customer_id = c.customer_id AND o.status = 'completed'
+WHERE o.order_id IS NULL
+ORDER BY c.customer_id;
 
+-- Q5: customers spending above the customer-level average
+WITH customer_spend AS (
+    SELECT customer_id, SUM(order_amount) AS total_spend
+    FROM orders
+    WHERE status = 'completed'
+    GROUP BY customer_id
+),
+average_spend AS (
+    SELECT AVG(total_spend) AS average_total
+    FROM customer_spend
+)
+SELECT customer_spend.customer_id, customer_spend.total_spend,
+       average_spend.average_total
+FROM customer_spend CROSS JOIN average_spend
+WHERE customer_spend.total_spend > average_spend.average_total
+ORDER BY customer_spend.total_spend DESC;
+
+-- Q6: customer spend rankings within city
+WITH customer_spend AS (
+    SELECT c.city, c.customer_id, SUM(o.order_amount) AS total_spend
+    FROM customers c
+    JOIN orders o ON o.customer_id = c.customer_id
+    WHERE o.status = 'completed'
+    GROUP BY c.city, c.customer_id
+)
+SELECT city, customer_id, ROUND(total_spend, 2) AS total_spend,
+       RANK() OVER (PARTITION BY city ORDER BY total_spend DESC) AS spend_rank,
+       DENSE_RANK() OVER (PARTITION BY city ORDER BY total_spend DESC) AS dense_rank,
+       ROW_NUMBER() OVER (PARTITION BY city ORDER BY total_spend DESC) AS row_number
+FROM customer_spend
+ORDER BY city, spend_rank, customer_id;
+
+-- Q7: monthly completed revenue
 SELECT substr(order_ts, 1, 7) AS order_month,
        ROUND(SUM(order_amount), 2) AS completed_revenue
 FROM orders
 WHERE status = 'completed'
 GROUP BY order_month
 ORDER BY order_month;
-
-SELECT discount_pct, COUNT(*) AS total_orders
-FROM orders
-GROUP BY discount_pct
-ORDER BY discount_pct;
-
-SELECT c.city, COUNT(o.order_id) AS completed_orders,
-       ROUND(SUM(o.order_amount), 2) AS completed_revenue
-FROM orders o
-JOIN customers c ON o.customer_id = c.customer_id
-WHERE o.status = 'completed'
-GROUP BY c.city
-ORDER BY completed_revenue DESC;

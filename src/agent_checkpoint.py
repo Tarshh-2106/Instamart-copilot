@@ -6,7 +6,10 @@ from datetime import datetime, timezone
 folder = "state"
 
 
-def save_checkpoint(session_id, question, messages, step):
+def save_checkpoint(
+    session_id, question, messages, step, scenario_id=None,
+    tokens_used=0, tool_history=None, model_calls=0
+):
     os.makedirs(folder, exist_ok=True)
 
     data = {
@@ -14,6 +17,11 @@ def save_checkpoint(session_id, question, messages, step):
         "question": question,
         "messages": messages,
         "step": step,
+        "run_id": session_id,
+        "scenario_id": scenario_id,
+        "tokens_used": tokens_used,
+        "tool_history": tool_history or [],
+        "model_calls": model_calls,
         "updated_at": datetime.now(timezone.utc).isoformat()
     }
 

@@ -3,6 +3,8 @@ import os
 import sys
 import json
 import sqlite3
+import time
+import uuid
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -12,6 +14,7 @@ from agent_checkpoint import save_checkpoint, load_checkpoint, delete_checkpoint
 
 db = "data/instamart.db"
 max_steps = 6
+LAST_RUN = {}
 
 
 def get_order(order_id):
@@ -88,18 +91,40 @@ def search_policy_tool(args):
 
 
 def issue_refund(args):
+    order_id = args.get("order_id")
+    order = get_order(order_id)
+    if "error" in order or order["status"] != "completed":
+        return {"error": "Only completed orders can receive a refund"}
+    eligible = calculate_refund(order["order_amount"], order["delivery_minutes"])
+    try:
+        requested = round(float(args.get("refund_inr")), 2)
+    except (TypeError, ValueError):
+        return {"error": "Invalid refund amount"}
+    if eligible.get("refund_inr") != requested or requested > 1000:
+        return {"error": "Refund is not eligible for automatic processing"}
     return {
         "status": "approved_for_mock_processing",
-        "order_id": args.get("order_id"),
-        "refund_inr": args.get("refund_inr")
+        "order_id": order_id,
+        "refund_inr": requested
     }
 
 
 def escalate_to_human(args):
+    order_id = args.get("order_id")
+    try:
+        amount = round(float(args.get("refund_inr")), 2)
+    except (TypeError, ValueError):
+        return {"error": "Invalid refund amount"}
+    order = get_order(order_id)
+    if "error" in order or order["status"] != "completed":
+        return {"error": "Only completed orders can be escalated for a refund"}
+    eligible = calculate_refund(order["order_amount"], order["delivery_minutes"])
+    if amount <= 1000 or eligible.get("refund_inr") != amount:
+        return {"error": "Only eligible refunds above INR 1000 require escalation"}
     return {
         "status": "escalation_recorded",
-        "order_id": args.get("order_id"),
-        "refund_inr": args.get("refund_inr")
+        "order_id": order_id,
+        "refund_inr": amount
     }
 
 
@@ -209,32 +234,57 @@ def run_tool(name, args):
 
 
 
-def run_agent(question, session_id=None, resume=False):
+def run_agent(
+    user_message, scenario_id=None, max_iterations=6, token_limit=6000,
+    time_limit_seconds=10, session_id=None, resume=False
+):
+    global LAST_RUN
+    question = user_message
     if not isinstance(question, str) or not question.strip():
+        LAST_RUN = {"status": "NEEDS_INFO", "model_calls": 0, "tokens_used": 0, "tool_history": []}
         return "NEEDS_INFO: please describe your refund request."
 
     mock_llm.reset()
-
+    started = time.monotonic()
+    run_id = session_id or scenario_id or uuid.uuid4().hex
+    tokens_used = 0
+    model_calls = 0
+    tool_history = []
 
     if resume:
-        if not session_id:
+        if not session_id and not scenario_id:
+            LAST_RUN = {"status": "NEEDS_INFO", "model_calls": 0, "tokens_used": 0, "tool_history": []}
             return "NEEDS_INFO: session ID required to resume."
 
-        saved = load_checkpoint(session_id)
+        run_id = session_id or scenario_id
+        saved = load_checkpoint(run_id)
 
         if saved is None:
+            LAST_RUN = {"status": "NOT_FOUND", "model_calls": 0, "tokens_used": 0, "tool_history": []}
             return "NOT_FOUND: no saved checkpoint for this session."
 
         if saved.get("question") != question.strip():
+            LAST_RUN = {"status": "SAFE_FALLBACK", "model_calls": 0, "tokens_used": 0, "tool_history": []}
             return "SAFE_FALLBACK: request does not match saved session."
+        if (
+            scenario_id is not None
+            and saved.get("scenario_id") is not None
+            and saved.get("scenario_id") != scenario_id
+        ):
+            LAST_RUN = {"status": "SAFE_FALLBACK", "model_calls": 0, "tokens_used": 0, "tool_history": []}
+            return "SAFE_FALLBACK: scenario does not match saved session."
 
         messages = saved.get("messages", [])
 
         if not messages:
+            LAST_RUN = {"status": "SAFE_FALLBACK", "model_calls": 0, "tokens_used": 0, "tool_history": []}
             return "SAFE_FALLBACK: checkpoint has no conversation history."
 
         start_step = saved.get("step", 0)
-
+        tokens_used = saved.get("tokens_used", 0)
+        model_calls = saved.get("model_calls", 0)
+        tool_history = saved.get("tool_history", [])
+        scenario_id = saved.get("scenario_id", scenario_id)
     else:
         messages = [
             {
@@ -253,26 +303,84 @@ def run_agent(question, session_id=None, resume=False):
 
         start_step = 0
 
-    if session_id and not resume:
-        save_checkpoint(session_id, question.strip(), messages, start_step)
+    if run_id and not resume:
+        save_checkpoint(
+            run_id, question.strip(), messages, start_step, scenario_id,
+            tokens_used, tool_history, model_calls
+        )
 
-    for step in range(start_step, max_steps):
+    if max_iterations < 1 or token_limit < 1 or time_limit_seconds <= 0:
+        LAST_RUN = {
+            "status": "SAFE_FALLBACK", "model_calls": model_calls,
+            "tokens_used": tokens_used, "tool_history": tool_history,
+            "run_id": run_id, "scenario_id": scenario_id,
+        }
+        return "SAFE_FALLBACK: limits must be positive."
+
+    for step in range(start_step, max_iterations):
+        if tokens_used >= token_limit:
+            LAST_RUN = {
+                "status": "FALLBACK_TOKEN_LIMIT", "model_calls": model_calls,
+                "tokens_used": tokens_used, "tool_history": tool_history,
+                "run_id": run_id, "scenario_id": scenario_id,
+            }
+            return "FALLBACK_TOKEN_LIMIT: support agent token limit reached."
+        if time.monotonic() - started >= time_limit_seconds:
+            LAST_RUN = {
+                "status": "FALLBACK_TIME_LIMIT", "model_calls": model_calls,
+                "tokens_used": tokens_used, "tool_history": tool_history,
+                "run_id": run_id, "scenario_id": scenario_id,
+            }
+            return "FALLBACK_TIME_LIMIT: support agent time limit reached."
         try:
             response = mock_llm.chat(messages, tools=TOOLS_SPEC)
+            model_calls += 1
+            call_tokens = response.usage.total_tokens
+            if tokens_used + call_tokens > token_limit:
+                LAST_RUN = {
+                    "status": "FALLBACK_TOKEN_LIMIT", "model_calls": model_calls,
+                    "tokens_used": tokens_used, "tool_history": tool_history,
+                    "run_id": run_id, "scenario_id": scenario_id,
+                }
+                return "FALLBACK_TOKEN_LIMIT: support agent token limit reached."
+            tokens_used += call_tokens
             message = response.choices[0].message
         except Exception as e:
-            return f"SAFE_FALLBACK: agent call failed ({type(e).__name__})."
+            model_calls += 1
+            kind = type(e).__name__
+            LAST_RUN = {
+                "status": "SAFE_FALLBACK", "model_calls": model_calls,
+                "tokens_used": tokens_used, "tool_history": tool_history,
+                "run_id": run_id, "scenario_id": scenario_id,
+            }
+            return f"SAFE_FALLBACK: agent call failed ({kind})."
+
+        if time.monotonic() - started >= time_limit_seconds:
+            LAST_RUN = {
+                "status": "FALLBACK_TIME_LIMIT", "model_calls": model_calls,
+                "tokens_used": tokens_used, "tool_history": tool_history,
+                "run_id": run_id, "scenario_id": scenario_id,
+            }
+            return "FALLBACK_TIME_LIMIT: support agent time limit reached."
 
         calls = getattr(message, "tool_calls", None)
 
         if not calls:
-            return message.content or "SAFE_FALLBACK: no agent response."
+            result = message.content or "SAFE_FALLBACK: no agent response."
+            status = result.split(":", 1)[0].strip().replace(" ", "_").upper()
+            LAST_RUN = {
+                "status": status, "model_calls": model_calls,
+                "tokens_used": tokens_used, "tool_history": tool_history,
+                "run_id": run_id, "scenario_id": scenario_id,
+            }
+            return result
 
         for call in calls:
             try:
                 args = call.arguments
                 if isinstance(args, str):
                     args = json.loads(args)
+                tool_history.append(call.name)
                 result = run_tool(call.name, args)
             except (json.JSONDecodeError, TypeError, ValueError):
                 result = {"error": "Invalid tool arguments"}
@@ -301,12 +409,16 @@ def run_agent(question, session_id=None, resume=False):
                 "content": json.dumps(result)
             })
 
-            if session_id:
+            if run_id:
                 save_checkpoint(
-                    session_id,
+                    run_id,
                     question.strip(),
                     messages,
-                    step + 1
+                    step + 1,
+                    scenario_id,
+                    tokens_used,
+                    tool_history,
+                    model_calls
                 )
 
     summary = []
@@ -319,8 +431,13 @@ def run_agent(question, session_id=None, resume=False):
 
     summary = "\n".join(summary[-6:])
 
+    LAST_RUN = {
+        "status": "FALLBACK_MAX_ITERATIONS", "model_calls": model_calls,
+        "tokens_used": tokens_used, "tool_history": tool_history,
+        "run_id": run_id, "scenario_id": scenario_id,
+    }
     return (
-        "ESCALATE: maximum agent steps reached. "
+        "FALLBACK_MAX_ITERATIONS: maximum agent steps reached. "
         "Human support handoff required.\n"
         "Case summary:\n" + summary
     )

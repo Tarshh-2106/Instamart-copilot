@@ -11,3 +11,4 @@ data/instamart.db-journal
 
 src/README.md
 state/
+outputs/*.png

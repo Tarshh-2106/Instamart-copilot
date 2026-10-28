@@ -1,7 +1,6 @@
 
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -92,25 +91,6 @@ points = pca.fit_transform(z)
 rfm["pca1"] = points[:, 0]
 rfm["pca2"] = points[:, 1]
 
-plt.figure(figsize=(9, 6))
-
-for seg in sorted(rfm["segment"].unique()):
-    d = rfm[rfm["segment"] == seg]
-    plt.scatter(
-        d["pca1"],
-        d["pca2"],
-        label=names[seg],
-        alpha=0.7
-    )
-
-plt.xlabel("PCA Component 1")
-plt.ylabel("PCA Component 2")
-plt.title("Customer Segmentation using RFM and K-Means")
-plt.legend()
-plt.tight_layout()
-plt.savefig(os.path.join(out, "customer_segments_pca.png"), dpi=200)
-plt.close()
-
 rfm.to_csv(os.path.join(out, "customer_segments.csv"), index=False)
 
 rfm.groupby("segment_name")[features].mean().round(2).to_csv(
@@ -121,4 +101,3 @@ print("\nPCA explained variance ratio:", pca.explained_variance_ratio_.round(4))
 print("Saved outputs/customer_segments.csv")
 print("Saved outputs/segment_summary.csv")
 print("Saved outputs/cluster_evaluation.csv")
-print("Saved outputs/customer_segments_pca.png")

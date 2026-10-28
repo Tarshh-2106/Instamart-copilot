@@ -1,29 +1,27 @@
-
+import contextlib
+import io
+import os
+import re
 import sqlite3
+import pandas as pd
 
-db = "data/instamart.db"
-file = "sql/queries.sql"
+with open("sql/queries.sql", encoding="utf-8") as query_file:
+    queries = [
+        part.strip() for part in
+        re.sub(r"(?m)^\s*--.*$", "", query_file.read()).split(";")
+        if part.strip()
+    ]
 
-with open(file, "r", encoding="utf-8-sig") as f:
-    queries = f.read().split(";")
+report = io.StringIO()
+with contextlib.redirect_stdout(report):
+    with sqlite3.connect("data/instamart.db") as connection:
+        for number, query in enumerate(queries, start=1):
+            result = pd.read_sql_query(query, connection)
+            print(f"\nQ{number} ({len(result)} rows)")
+            print(result.to_string(index=False))
 
-con = sqlite3.connect(db)
-
-try:
-    for i, query in enumerate(queries, 1):
-        query = query.strip()
-
-        if not query:
-            continue
-
-        print(f"\nQUERY {i}")
-        print("-" * 50)
-
-        cur = con.execute(query)
-
-        if cur.description:
-            print([col[0] for col in cur.description])
-            for row in cur.fetchall():
-                print(row)
-finally:
-    con.close()
+text = report.getvalue()
+os.makedirs("outputs", exist_ok=True)
+with open("outputs/sql_analysis_results.txt", "w", encoding="utf-8") as output_file:
+    output_file.write(text)
+print(text, end="")

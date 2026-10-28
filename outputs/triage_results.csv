@@ -1,165 +1,165 @@
 ticket_id,customer_id,true_category,category,reason,status,customer_segment,assigned_team,tokens,cumulative_tokens
-T0024,C0486,fraud,fraud,keyword match,success,Lapsed / High Risk,retention_team,84,84
-T0073,C0080,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,164
-T0095,C1087,technical,technical,keyword match,success,Occasional Customers,general_support,82,246
-T0159,C1172,none,technical,empty_text,fallback,Frequent Recent Customers,loyal_customer_support,0,246
-T0080,C0910,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,330
-T0124,C0139,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,414
-T0061,C0812,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,76,490
-T0118,C0355,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,569
-T0037,C1156,billing,billing,keyword match,success,High Spending / Premium,priority_support,80,649
-T0002,C0881,delivery,delivery,keyword match,success,Occasional Customers,general_support,78,727
-T0163,C0322,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,793,1520
-T0031,C0958,technical,technical,keyword match,success,Lapsed / High Risk,retention_team,82,1602
-T0047,C0756,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,1673
-T0063,C0892,technical,technical,invalid_json,fallback,Occasional Customers,general_support,75,1748
-T0121,C0852,billing,billing,keyword match,success,Lapsed / High Risk,retention_team,80,1828
-T0139,C0829,technical,technical,keyword match,success,Occasional Customers,general_support,87,1915
-T0115,C1025,technical,technical,keyword match,success,Occasional Customers,general_support,71,1986
-T0123,C0674,technical,technical,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,71,2057
-T0116,C0294,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,2141
-T0136,C0891,fraud,fraud,keyword match,success,Occasional Customers,general_support,78,2219
-T0008,C1177,fraud,fraud,keyword match,success,Lapsed / High Risk,retention_team,84,2303
-T0102,C0985,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,2385
-T0072,C0218,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,2469
-T0101,C1151,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,2549
-T0059,C0764,technical,technical,keyword match,success,Occasional Customers,general_support,71,2620
-T0049,C0078,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,2700
-T0153,C0150,billing,technical,invalid_json,fallback,Occasional Customers,general_support,80,2780
-T0050,C0117,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,78,2858
-T0147,C0125,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,82,2940
-T0074,C1119,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,78,3018
-T0156,C0328,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,3102
-T0145,C0751,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,3182
-T0053,C0447,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,3262
-T0134,C0608,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,82,3344
-T0039,C0298,technical,technical,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,87,3431
-T0016,C0962,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,3515
-T0055,C1063,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,87,3602
-T0130,C0692,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,82,3684
-T0099,C1000,technical,technical,keyword match,success,High Spending / Premium,priority_support,87,3771
-T0062,C0403,delivery,technical,invalid_json,fallback,Occasional Customers,general_support,82,3853
-T0013,C0507,billing,billing,keyword match,success,Lapsed / High Risk,retention_team,80,3933
-T0137,C0978,billing,billing,keyword match,success,Occasional Customers,general_support,80,4013
-T0152,C0530,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,4097
-T0144,C0521,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,4181
-T0094,C0863,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,4263
-T0021,C0909,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,76,4339
-T0077,C0082,billing,billing,keyword match,success,High Spending / Premium,priority_support,76,4415
-T0036,C0173,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,4499
-T0113,C0077,billing,billing,keyword match,success,Lapsed / High Risk,retention_team,76,4575
-T0060,C0784,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,4659
-T0043,C0942,technical,technical,keyword match,success,High Spending / Premium,priority_support,71,4730
-T0048,C0733,fraud,technical,invalid_category,fallback,Occasional Customers,general_support,78,4808
-T0154,C1071,delivery,technical,invalid_json,fallback,Occasional Customers,general_support,86,4894
-T0125,C1156,billing,billing,keyword match,success,High Spending / Premium,priority_support,76,4970
-T0146,C1024,delivery,delivery,keyword match,success,High Spending / Premium,priority_support,79,5049
-T0107,C0783,technical,technical,keyword match,success,Occasional Customers,general_support,71,5120
-T0011,C0233,technical,technical,keyword match,success,Occasional Customers,general_support,87,5207
-T0017,C0028,billing,billing,keyword match,success,Occasional Customers,general_support,80,5287
-T0111,C1033,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,5358
-T0041,C0464,billing,billing,keyword match,success,Occasional Customers,general_support,80,5438
-T0120,C0208,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,5522
-T0122,C0404,delivery,delivery,keyword match,success,Occasional Customers,general_support,78,5600
-T0001,C0851,billing,billing,keyword match,success,Lapsed / High Risk,retention_team,80,5680
-T0064,C0848,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,5764
-T0092,C0585,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,78,5842
-T0038,C0882,delivery,technical,invalid_json,fallback,Lapsed / High Risk,retention_team,82,5924
-T0155,C0285,technical,technical,keyword match,success,Lapsed / High Risk,retention_team,87,6011
-T0104,C0815,fraud,fraud,keyword match,success,Occasional Customers,general_support,78,6089
-T0012,C0335,fraud,technical,invalid_category,fallback,High Spending / Premium,priority_support,84,6173
-T0084,C0569,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,6257
-T0051,C1049,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,6328
-T0143,C0339,technical,technical,keyword match,success,Occasional Customers,general_support,87,6415
-T0035,C1175,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,82,6497
-T0028,C1036,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,6581
-T0100,C0754,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,6665
-T0022,C1160,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,6747
-T0082,C0168,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,78,6825
-T0127,C0976,technical,technical,keyword match,success,Occasional Customers,general_support,82,6907
-T0162,C0665,delivery,technical,invalid_json,fallback,High Spending / Premium,priority_support,797,7704
-T0109,C1080,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,7784
-T0046,C0442,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,7866
-T0081,C0559,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,7946
-T0007,C0682,technical,technical,keyword match,success,High Spending / Premium,priority_support,71,8017
-T0068,C0208,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,8101
-T0085,C0031,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,8181
-T0075,C0901,technical,technical,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,87,8268
-T0052,C1005,fraud,fraud,keyword match,success,Occasional Customers,general_support,84,8352
-T0066,C1199,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,8434
-T0151,C1011,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,8505
-T0131,C0069,technical,technical,keyword match,success,Lapsed / High Risk,retention_team,71,8576
-T0006,C0177,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,79,8655
-T0135,C0303,technical,technical,invalid_json,fallback,Occasional Customers,general_support,86,8741
-T0079,C1128,technical,technical,keyword match,success,Occasional Customers,general_support,71,8812
-T0040,C0256,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,8896
-T0093,C0131,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,8976
-T0089,C0860,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,76,9052
-T0034,C1188,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,9134
-T0033,C0714,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,9214
-T0160,C0670,none,technical,empty_text,fallback,High Spending / Premium,priority_support,0,9214
-T0087,C0797,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,87,9301
-T0009,C0758,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,9381
-T0108,C0340,fraud,fraud,keyword match,success,Lapsed / High Risk,retention_team,84,9465
-T0054,C0571,delivery,delivery,keyword match,success,Occasional Customers,general_support,79,9544
-T0025,C0610,billing,technical,invalid_category,fallback,Lapsed / High Risk,retention_team,80,9624
-T0004,C0721,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,9708
-T0148,C1057,fraud,technical,invalid_json,fallback,Frequent Recent Customers,loyal_customer_support,88,9796
-T0088,C0852,fraud,fraud,keyword match,success,Lapsed / High Risk,retention_team,78,9874
-T0030,C0015,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,79,9953
-T0067,C0704,technical,technical,keyword match,success,Occasional Customers,general_support,71,10024
-T0029,C0885,billing,billing,keyword match,success,Occasional Customers,general_support,80,10104
-T0129,C0237,billing,billing,keyword match,success,Occasional Customers,general_support,80,10184
-T0105,C0063,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,76,10260
-T0045,C0628,billing,billing,keyword match,success,Occasional Customers,general_support,80,10340
-T0069,C0491,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,10420
-T0010,C1190,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,10499
-T0023,C0400,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,10570
-T0106,C0197,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,10649
-T0015,C0488,technical,technical,keyword match,success,High Spending / Premium,priority_support,82,10731
-T0091,C0796,technical,technical,invalid_json,fallback,Lapsed / High Risk,retention_team,91,10822
-T0126,C0996,delivery,delivery,keyword match,success,High Spending / Premium,priority_support,78,10900
-T0096,C0324,fraud,technical,invalid_category,fallback,High Spending / Premium,priority_support,84,10984
-T0149,C0770,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,11064
-T0070,C1150,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,11143
-T0026,C0677,delivery,delivery,keyword match,success,Lapsed / High Risk,retention_team,79,11222
-T0097,C0932,billing,billing,keyword match,success,Lapsed / High Risk,retention_team,76,11298
-T0132,C0282,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,11382
-T0027,C0232,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,82,11464
-T0119,C0629,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,82,11546
-T0157,C1107,none,technical,empty_text,fallback,Frequent Recent Customers,loyal_customer_support,0,11546
-T0058,C0287,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,11625
-T0110,C0056,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,11707
-T0018,C1135,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,11786
-T0032,C1139,fraud,technical,invalid_json,fallback,Frequent Recent Customers,loyal_customer_support,88,11874
-T0003,C0591,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,71,11945
-T0042,C0508,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,78,12023
-T0056,C0140,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,12107
-T0114,C0619,delivery,delivery,keyword match,success,Occasional Customers,general_support,78,12185
-T0083,C0356,technical,technical,keyword match,success,Lapsed / High Risk,retention_team,71,12256
-T0138,C0720,delivery,technical,invalid_category,fallback,Occasional Customers,general_support,79,12335
-T0057,C1199,billing,billing,keyword match,success,Occasional Customers,general_support,76,12411
-T0076,C0418,fraud,fraud,keyword match,success,Lapsed / High Risk,retention_team,84,12495
-T0019,C0579,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,87,12582
-T0103,C0499,technical,technical,keyword match,success,Occasional Customers,general_support,82,12664
-T0164,C0794,delivery,delivery,keyword match,success,Occasional Customers,general_support,793,13457
-T0090,C0322,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,82,13539
-T0112,C0432,fraud,technical,invalid_json,fallback,Frequent Recent Customers,loyal_customer_support,88,13627
-T0133,C0717,billing,billing,keyword match,success,High Spending / Premium,priority_support,76,13703
-T0014,C0579,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,79,13782
-T0158,C1106,none,technical,empty_text,fallback,Lapsed / High Risk,retention_team,0,13782
-T0020,C0460,fraud,fraud,keyword match,success,Frequent Recent Customers,loyal_customer_support,84,13866
-T0142,C0605,delivery,delivery,keyword match,success,Occasional Customers,general_support,82,13948
-T0086,C1132,delivery,delivery,keyword match,success,High Spending / Premium,priority_support,78,14026
-T0141,C0376,billing,billing,keyword match,success,Occasional Customers,general_support,76,14102
-T0044,C0862,fraud,fraud,keyword match,success,High Spending / Premium,priority_support,78,14180
-T0117,C0465,billing,billing,keyword match,success,Occasional Customers,general_support,76,14256
-T0078,C0586,delivery,delivery,keyword match,success,Occasional Customers,general_support,78,14334
-T0140,C1173,fraud,technical,invalid_category,fallback,Occasional Customers,general_support,84,14418
-T0071,C0966,technical,technical,keyword match,success,Frequent Recent Customers,loyal_customer_support,87,14505
-T0161,C0202,delivery,delivery,keyword match,success,Frequent Recent Customers,loyal_customer_support,793,15298
-T0150,C0622,delivery,technical,invalid_json,fallback,Occasional Customers,general_support,82,15380
-T0065,C0205,billing,billing,keyword match,success,Frequent Recent Customers,loyal_customer_support,80,15460
-T0128,C0467,fraud,fraud,keyword match,success,Occasional Customers,general_support,78,15538
-T0005,C0404,billing,billing,keyword match,success,Occasional Customers,general_support,76,15614
-T0098,C0343,delivery,delivery,keyword match,success,Occasional Customers,general_support,78,15692
+T0024,C0486,fraud,fraud,keyword match,classified_json,Lapsed / High Risk,retention_team,84,84
+T0073,C0080,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,164
+T0095,C1087,technical,technical,keyword match,classified_json,Occasional Customers,general_support,82,246
+T0159,C1172,none,unclassified,empty_text,skipped_empty,Frequent Recent Customers,loyal_customer_support,0,246
+T0080,C0910,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,330
+T0124,C0139,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,414
+T0061,C0812,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,76,490
+T0118,C0355,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,569
+T0037,C1156,billing,billing,keyword match,classified_json,High Spending / Premium,priority_support,80,649
+T0002,C0881,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,727
+T0163,C0322,delivery,unclassified,input_token_limit,skipped_too_long,Frequent Recent Customers,loyal_customer_support,0,727
+T0031,C0958,technical,technical,keyword match,classified_json,Lapsed / High Risk,retention_team,82,809
+T0047,C0756,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,880
+T0063,C0892,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,951
+T0121,C0852,billing,billing,non_json_category_match,classified_text,Lapsed / High Risk,retention_team,84,1035
+T0139,C0829,technical,technical,keyword match,classified_json,Occasional Customers,general_support,87,1122
+T0115,C1025,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,1193
+T0123,C0674,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,1264
+T0116,C0294,fraud,unclassified,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,84,1348
+T0136,C0891,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,78,1426
+T0008,C1177,fraud,fraud,keyword match,classified_json,Lapsed / High Risk,retention_team,84,1510
+T0102,C0985,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,1592
+T0072,C0218,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,1676
+T0101,C1151,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,1756
+T0059,C0764,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,1827
+T0049,C0078,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,1907
+T0153,C0150,billing,billing,keyword match,classified_json,Occasional Customers,general_support,76,1983
+T0050,C0117,delivery,delivery,non_json_category_match,classified_text,Lapsed / High Risk,retention_team,82,2065
+T0147,C0125,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,82,2147
+T0074,C1119,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,78,2225
+T0156,C0328,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,2309
+T0145,C0751,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,2389
+T0053,C0447,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,2469
+T0134,C0608,delivery,delivery,keyword match,classified_json,Lapsed / High Risk,retention_team,82,2551
+T0039,C0298,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,2638
+T0016,C0962,fraud,unclassified,invalid_category,fallback,Occasional Customers,general_support,84,2722
+T0055,C1063,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,2809
+T0130,C0692,delivery,delivery,keyword match,classified_json,Lapsed / High Risk,retention_team,82,2891
+T0099,C1000,technical,technical,keyword match,classified_json,High Spending / Premium,priority_support,87,2978
+T0062,C0403,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,3056
+T0013,C0507,billing,billing,non_json_category_match,classified_text,Lapsed / High Risk,retention_team,84,3140
+T0137,C0978,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,3220
+T0152,C0530,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,3304
+T0144,C0521,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,3388
+T0094,C0863,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,3470
+T0021,C0909,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,76,3546
+T0077,C0082,billing,billing,keyword match,classified_json,High Spending / Premium,priority_support,76,3622
+T0036,C0173,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,3706
+T0113,C0077,billing,billing,keyword match,classified_json,Lapsed / High Risk,retention_team,76,3782
+T0060,C0784,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,3866
+T0043,C0942,technical,technical,keyword match,classified_json,High Spending / Premium,priority_support,71,3937
+T0048,C0733,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,78,4015
+T0154,C1071,delivery,unclassified,invalid_category,fallback,Occasional Customers,general_support,82,4097
+T0125,C1156,billing,billing,non_json_category_match,classified_text,High Spending / Premium,priority_support,80,4177
+T0146,C1024,delivery,delivery,keyword match,classified_json,High Spending / Premium,priority_support,79,4256
+T0107,C0783,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,4327
+T0011,C0233,technical,technical,keyword match,classified_json,Occasional Customers,general_support,87,4414
+T0017,C0028,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,4494
+T0111,C1033,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,4565
+T0041,C0464,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,4645
+T0120,C0208,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,4729
+T0122,C0404,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,4807
+T0001,C0851,billing,billing,keyword match,classified_json,Lapsed / High Risk,retention_team,80,4887
+T0064,C0848,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,4971
+T0092,C0585,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,78,5049
+T0038,C0882,delivery,delivery,keyword match,classified_json,Lapsed / High Risk,retention_team,78,5127
+T0155,C0285,technical,technical,non_json_category_match,classified_text,Lapsed / High Risk,retention_team,91,5218
+T0104,C0815,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,78,5296
+T0012,C0335,fraud,fraud,keyword match,classified_json,High Spending / Premium,priority_support,84,5380
+T0084,C0569,fraud,unclassified,invalid_category,fallback,Occasional Customers,general_support,84,5464
+T0051,C1049,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,5535
+T0143,C0339,technical,technical,keyword match,classified_json,Occasional Customers,general_support,87,5622
+T0035,C1175,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,82,5704
+T0028,C1036,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,5788
+T0100,C0754,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,5872
+T0022,C1160,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,5954
+T0082,C0168,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,78,6032
+T0127,C0976,technical,technical,keyword match,classified_json,Occasional Customers,general_support,82,6114
+T0162,C0665,delivery,unclassified,input_token_limit,skipped_too_long,High Spending / Premium,priority_support,0,6114
+T0109,C1080,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,6194
+T0046,C0442,delivery,delivery,non_json_category_match,classified_text,Occasional Customers,general_support,86,6280
+T0081,C0559,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,6360
+T0007,C0682,technical,technical,keyword match,classified_json,High Spending / Premium,priority_support,71,6431
+T0068,C0208,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,6515
+T0085,C0031,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,6595
+T0075,C0901,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,6682
+T0052,C1005,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,6766
+T0066,C1199,delivery,unclassified,invalid_category,fallback,Occasional Customers,general_support,82,6848
+T0151,C1011,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,6919
+T0131,C0069,technical,technical,keyword match,classified_json,Lapsed / High Risk,retention_team,71,6990
+T0006,C0177,delivery,delivery,keyword match,classified_json,Lapsed / High Risk,retention_team,79,7069
+T0135,C0303,technical,technical,keyword match,classified_json,Occasional Customers,general_support,82,7151
+T0079,C1128,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,7222
+T0040,C0256,fraud,fraud,non_json_category_match,classified_text,Frequent Recent Customers,loyal_customer_support,88,7310
+T0093,C0131,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,7390
+T0089,C0860,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,76,7466
+T0034,C1188,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,7548
+T0033,C0714,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,7628
+T0160,C0670,none,unclassified,empty_text,skipped_empty,High Spending / Premium,priority_support,0,7628
+T0087,C0797,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,7715
+T0009,C0758,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,7795
+T0108,C0340,fraud,fraud,keyword match,classified_json,Lapsed / High Risk,retention_team,84,7879
+T0054,C0571,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,79,7958
+T0025,C0610,billing,billing,keyword match,classified_json,Lapsed / High Risk,retention_team,80,8038
+T0004,C0721,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,8122
+T0148,C1057,fraud,unclassified,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,84,8206
+T0088,C0852,fraud,fraud,keyword match,classified_json,Lapsed / High Risk,retention_team,78,8284
+T0030,C0015,delivery,delivery,non_json_category_match,classified_text,Lapsed / High Risk,retention_team,83,8367
+T0067,C0704,technical,technical,keyword match,classified_json,Occasional Customers,general_support,71,8438
+T0029,C0885,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,8518
+T0129,C0237,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,8598
+T0105,C0063,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,76,8674
+T0045,C0628,billing,billing,keyword match,classified_json,Occasional Customers,general_support,80,8754
+T0069,C0491,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,8834
+T0010,C1190,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,8913
+T0023,C0400,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,8984
+T0106,C0197,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,9063
+T0015,C0488,technical,technical,keyword match,classified_json,High Spending / Premium,priority_support,82,9145
+T0091,C0796,technical,technical,keyword match,classified_json,Lapsed / High Risk,retention_team,87,9232
+T0126,C0996,delivery,delivery,keyword match,classified_json,High Spending / Premium,priority_support,78,9310
+T0096,C0324,fraud,fraud,non_json_category_match,classified_text,High Spending / Premium,priority_support,88,9398
+T0149,C0770,billing,billing,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,80,9478
+T0070,C1150,delivery,unclassified,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,79,9557
+T0026,C0677,delivery,delivery,keyword match,classified_json,Lapsed / High Risk,retention_team,79,9636
+T0097,C0932,billing,billing,keyword match,classified_json,Lapsed / High Risk,retention_team,76,9712
+T0132,C0282,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,9796
+T0027,C0232,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,82,9878
+T0119,C0629,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,82,9960
+T0157,C1107,none,unclassified,empty_text,skipped_empty,Frequent Recent Customers,loyal_customer_support,0,9960
+T0058,C0287,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,10039
+T0110,C0056,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,10121
+T0018,C1135,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,10200
+T0032,C1139,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,10284
+T0003,C0591,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,71,10355
+T0042,C0508,delivery,delivery,non_json_category_match,classified_text,Frequent Recent Customers,loyal_customer_support,82,10437
+T0056,C0140,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,10521
+T0114,C0619,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,10599
+T0083,C0356,technical,technical,keyword match,classified_json,Lapsed / High Risk,retention_team,71,10670
+T0138,C0720,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,79,10749
+T0057,C1199,billing,billing,keyword match,classified_json,Occasional Customers,general_support,76,10825
+T0076,C0418,fraud,unclassified,invalid_category,fallback,Lapsed / High Risk,retention_team,84,10909
+T0019,C0579,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,10996
+T0103,C0499,technical,technical,keyword match,classified_json,Occasional Customers,general_support,82,11078
+T0164,C0794,delivery,unclassified,input_token_limit,skipped_too_long,Occasional Customers,general_support,0,11078
+T0090,C0322,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,82,11160
+T0112,C0432,fraud,fraud,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,84,11244
+T0133,C0717,billing,billing,keyword match,classified_json,High Spending / Premium,priority_support,76,11320
+T0014,C0579,delivery,delivery,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,79,11399
+T0158,C1106,none,unclassified,empty_text,skipped_empty,Lapsed / High Risk,retention_team,0,11399
+T0020,C0460,fraud,fraud,non_json_category_match,classified_text,Frequent Recent Customers,loyal_customer_support,88,11487
+T0142,C0605,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,82,11569
+T0086,C1132,delivery,delivery,keyword match,classified_json,High Spending / Premium,priority_support,78,11647
+T0141,C0376,billing,billing,keyword match,classified_json,Occasional Customers,general_support,76,11723
+T0044,C0862,fraud,fraud,keyword match,classified_json,High Spending / Premium,priority_support,78,11801
+T0117,C0465,billing,billing,keyword match,classified_json,Occasional Customers,general_support,76,11877
+T0078,C0586,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,11955
+T0140,C1173,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,84,12039
+T0071,C0966,technical,technical,keyword match,classified_json,Frequent Recent Customers,loyal_customer_support,87,12126
+T0161,C0202,delivery,unclassified,input_token_limit,skipped_too_long,Frequent Recent Customers,loyal_customer_support,0,12126
+T0150,C0622,delivery,delivery,keyword match,classified_json,Occasional Customers,general_support,78,12204
+T0065,C0205,billing,unclassified,invalid_category,fallback,Frequent Recent Customers,loyal_customer_support,80,12284
+T0128,C0467,fraud,fraud,keyword match,classified_json,Occasional Customers,general_support,78,12362
+T0005,C0404,billing,billing,keyword match,classified_json,Occasional Customers,general_support,76,12438
+T0098,C0343,delivery,delivery,non_json_category_match,classified_text,Occasional Customers,general_support,82,12520

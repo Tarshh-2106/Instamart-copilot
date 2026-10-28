@@ -19,6 +19,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.utils import resample
+from sklearn.dummy import DummyClassifier
 
 base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 data_dir = os.path.join(base, "data", "clean")
@@ -32,6 +33,10 @@ segments = pd.read_csv(os.path.join(out_dir, "customer_segments.csv"))
 
 orders["order_ts"] = pd.to_datetime(orders["order_ts"], errors="coerce")
 orders["order_amount"] = pd.to_numeric(orders["order_amount"], errors="coerce")
+products = pd.read_csv(os.path.join(data_dir, "products.csv"))
+orders = orders.merge(
+    products[["product_id", "category"]], on="product_id", how="left"
+)
 
 orders = orders[orders["status"].eq("completed")].copy()
 orders = orders.dropna(subset=["customer_id", "order_ts"])
@@ -59,6 +64,19 @@ features = hist.groupby("customer_id").agg(
 
 features["recency"] = (cutoff - features["last_order"].dt.normalize()).dt.days
 features = features.drop(columns=["last_order"])
+favourite = (
+    hist.groupby(["customer_id", "category"])["quantity"]
+    .sum()
+    .rename("category_quantity")
+    .reset_index()
+    .sort_values(
+        ["customer_id", "category_quantity", "category"],
+        ascending=[True, False, True],
+    )
+    .drop_duplicates("customer_id")
+    .set_index("customer_id")["category"]
+)
+features["favourite_category"] = favourite
 
 future_customers = set(future["customer_id"].unique())
 features["lapsed"] = (~features.index.isin(future_customers)).astype(int)
@@ -81,7 +99,7 @@ num_cols = [
     "avg_order_value",
     "age"
 ]
-cat_cols = ["city", "gender"]
+cat_cols = ["city", "gender", "favourite_category"]
 
 x = features[num_cols + cat_cols]
 y = features["lapsed"]
@@ -104,22 +122,29 @@ prep = ColumnTransformer([
     ]), num_cols),
     ("cat", Pipeline([
         ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("encode", OneHotEncoder(handle_unknown="ignore"))
+        ("encode", OneHotEncoder(drop="first", handle_unknown="ignore"))
     ]), cat_cols)
 ])
 
 models = {
+    "Baseline": (
+        Pipeline([
+            ("prep", prep),
+            ("clf", DummyClassifier(strategy="most_frequent"))
+        ]),
+        {}
+    ),
     "Logistic Regression": (
         Pipeline([
             ("prep", prep),
             ("clf", LogisticRegression(
-                max_iter=2000,
+                max_iter=1000,
                 class_weight="balanced",
                 random_state=42
             ))
         ]),
         {
-            "clf__C": [0.1, 1, 10]
+            "clf__C": [0.01, 0.1, 1, 10, 100]
         }
     ),
     "Random Forest": (
@@ -139,45 +164,55 @@ models = {
 }
 
 results = []
+fitted_searches = {}
 best_name = None
 best_search = None
 best_f1 = -1
 
 for name, (pipe, params) in models.items():
-    search = GridSearchCV(
-        pipe,
-        params,
-        scoring="f1",
-        cv=5,
-        n_jobs=-1
-    )
-    search.fit(x_train, y_train)
+    if name == "Baseline":
+        search = pipe.fit(x_train, y_train)
+        best_score = 0.0
+        best_params = {}
+    else:
+        search = GridSearchCV(
+            pipe, params, scoring="f1", cv=5, n_jobs=-1
+        )
+        search.fit(x_train, y_train)
+        best_score = search.best_score_
+        best_params = search.best_params_
+    fitted_searches[name] = search
 
     pred = search.predict(x_test)
-    prob = search.predict_proba(x_test)[:, 1]
+    prob = (
+        search.predict_proba(x_test)[:, 1]
+        if hasattr(search, "predict_proba")
+        else pred.astype(float)
+    )
     score = f1_score(y_test, pred, zero_division=0)
 
     results.append({
         "model": name,
-        "best_cv_f1": round(search.best_score_, 4),
+        "best_cv_f1": round(best_score, 4),
         "test_accuracy": round(accuracy_score(y_test, pred), 4),
         "test_precision": round(precision_score(y_test, pred, zero_division=0), 4),
         "test_recall": round(recall_score(y_test, pred, zero_division=0), 4),
         "test_f1": round(score, 4),
         "test_roc_auc": round(roc_auc_score(y_test, prob), 4),
-        "best_params": str(search.best_params_)
+        "best_params": str(best_params)
     })
 
     print(f"\n{name}")
-    print("Best parameters:", search.best_params_)
+    print("Best parameters:", best_params)
     print("Test F1:", round(score, 4))
     print("Test ROC-AUC:", round(roc_auc_score(y_test, prob), 4))
     print(classification_report(y_test, pred, zero_division=0))
     print("Confusion matrix:")
     print(confusion_matrix(y_test, pred))
 
-    if score > best_f1:
-        best_f1 = score
+    selection_score = best_score if name != "Baseline" else -1
+    if selection_score > best_f1:
+        best_f1 = selection_score
         best_name = name
         best_search = search
 
@@ -215,14 +250,14 @@ train["lapsed"] = y_train.values
 majority_rows = train[train["lapsed"] == majority]
 minority_rows = train[train["lapsed"] == minority]
 
-minority_up = resample(
+minority_additions = resample(
     minority_rows,
     replace=True,
-    n_samples=len(majority_rows),
+    n_samples=len(majority_rows) - len(minority_rows),
     random_state=42
 )
 
-balanced = pd.concat([majority_rows, minority_up]).sample(
+balanced = pd.concat([train, minority_additions]).sample(
     frac=1,
     random_state=42
 )
@@ -254,21 +289,13 @@ pd.DataFrame([{
     "test_roc_auc": round(roc_auc_score(y_test, bal_prob), 4)
 }]).to_csv(os.path.join(out_dir, "lapse_resampling_results.csv"), index=False)
 
-prep_fit = best_model.named_steps["prep"]
-clf = best_model.named_steps["clf"]
-
-feature_names = prep_fit.get_feature_names_out()
-
-if hasattr(clf, "feature_importances_"):
-    importance = clf.feature_importances_
-    explanation = "Random Forest feature importance"
-else:
-    importance = abs(clf.coef_[0])
-    explanation = "Absolute Logistic Regression coefficients"
-
+forest_model = fitted_searches["Random Forest"].best_estimator_
+forest_prep = forest_model.named_steps["prep"]
+forest_clf = forest_model.named_steps["clf"]
+feature_names = forest_prep.get_feature_names_out()
 importance_df = pd.DataFrame({
     "feature": feature_names,
-    "importance": importance
+    "importance": forest_clf.feature_importances_
 }).sort_values("importance", ascending=False)
 
 importance_df.to_csv(
@@ -276,8 +303,20 @@ importance_df.to_csv(
     index=False
 )
 
-print("\nFeature interpretation:", explanation)
-print(importance_df.head(15).to_string(index=False))
+logistic_model = fitted_searches["Logistic Regression"].best_estimator_
+logistic_prep = logistic_model.named_steps["prep"]
+logistic_clf = logistic_model.named_steps["clf"]
+coefficients = pd.DataFrame({
+    "feature": logistic_prep.get_feature_names_out(),
+    "coefficient": logistic_clf.coef_[0]
+}).sort_values("coefficient")
+coefficients.to_csv(
+    os.path.join(out_dir, "lapse_logistic_coefficients.csv"), index=False
+)
+print("\nTop five Random Forest feature importances:")
+print(importance_df.head(5).to_string(index=False))
+print("\nLogistic Regression coefficient signs:")
+print(pd.concat([coefficients.head(3), coefficients.tail(3)]).to_string(index=False))
 
 print("\nFeature window:", start_date.date(), "to", (cutoff - pd.Timedelta(days=1)).date())
 print("Observation window:", cutoff.date(), "to", (end_date - pd.Timedelta(days=1)).date())

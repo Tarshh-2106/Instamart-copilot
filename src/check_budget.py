@@ -1,21 +1,21 @@
 
 import pandas as pd
 
-d = pd.read_csv("data/clean/classified_tickets_budget.csv")
+d = pd.read_csv("outputs/triage_budget_demo.csv")
 
 print("Columns:")
 print(d.columns.tolist())
 
-print("\nEstimated prompt tokens:")
-print("Minimum:", d["estimated_prompt_tokens"].min())
-print("Maximum:", d["estimated_prompt_tokens"].max())
-print("Average:", round(d["estimated_prompt_tokens"].mean(), 2))
+classified = d["status"].isin({"classified_json", "classified_text"})
+print("\nRecorded tokens:")
+print("Total:", int(d["tokens"].sum()))
+print("Average per ticket:", round(d["tokens"].mean(), 2))
 
-print("\nInputs over budget:")
-print((d["estimated_prompt_tokens"] > 100).sum())
+print("\nBudget-exhausted tickets:")
+print(d["status"].eq("budget_exhausted").sum())
 
 print("\nFallback reasons:")
-print(d.loc[d["status"] != "success", "reason"].value_counts())
+print(d.loc[~classified, "reason"].value_counts())
 
-print("\nSuccessful classifications over 100 recorded tokens:")
-print(((d["status"] == "success") & (d["tokens"] > 100)).sum())
+print("\nClassified tickets:")
+print(int(classified.sum()))

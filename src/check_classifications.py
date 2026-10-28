@@ -2,7 +2,7 @@
 import pandas as pd
 
 d = pd.read_csv("data/clean/classified_tickets.csv")
-t = pd.read_csv("data/clean/tickets.csv")
+t = pd.read_csv("data/clean/tickets.csv", keep_default_na=False)
 
 print("Total records:", len(d))
 print("Duplicate ticket IDs:", d["ticket_id"].duplicated().sum())
@@ -14,7 +14,7 @@ print(d["status"].value_counts(dropna=False))
 
 print("\nFallback reasons:")
 print(
-    d.loc[d["status"] != "success", "reason"]
+    d.loc[~d["status"].isin({"classified_json", "classified_text"}), "reason"]
     .value_counts(dropna=False)
 )
 
@@ -29,7 +29,7 @@ m = d.merge(
     how="left"
 )
 
-ok = m["status"] == "success"
+ok = m["status"].isin({"classified_json", "classified_text"})
 
 print("\nSuccessful predictions:", ok.sum())
 

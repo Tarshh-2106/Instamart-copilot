@@ -33,7 +33,7 @@ def load_policies():
 docs = load_policies()
 texts = [d["text"] for d in docs]
 
-vectorizer = TfidfVectorizer(stop_words="english")
+vectorizer = TfidfVectorizer()
 matrix = vectorizer.fit_transform(texts)
 
 def search_policy(question, k=5):

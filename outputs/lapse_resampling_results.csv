@@ -1,2 +1,2 @@
 experiment,model,test_f1,test_roc_auc
-Random oversampling,Logistic Regression,0.7137,0.7948
+Random oversampling,Random Forest,0.6577,0.7779

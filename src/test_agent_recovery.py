@@ -16,6 +16,9 @@ try:
     print("Session ID matches:", saved["session_id"] == sid)
     print("Question matches:", saved["question"] == question)
     print("Step restored:", saved["step"] == 2)
+    print("Run ID saved:", saved["run_id"] == sid)
+    print("Checkpoint token count saved:", "tokens_used" in saved)
+    print("Checkpoint tool history saved:", "tool_history" in saved)
 
     mismatch = run_agent("A different refund request", session_id=sid, resume=True)
     print("Mismatched request rejected:", mismatch.startswith("SAFE_FALLBACK"))
@@ -25,6 +28,15 @@ try:
 
     empty = run_agent(question, session_id=sid, resume=True)
     print("Empty history handled:", empty.startswith("SAFE_FALLBACK"))
+    if not (
+        saved["run_id"] == sid
+        and "tokens_used" in saved
+        and "tool_history" in saved
+        and mismatch.startswith("SAFE_FALLBACK")
+        and missing.startswith("NOT_FOUND")
+        and empty.startswith("SAFE_FALLBACK")
+    ):
+        raise AssertionError("Checkpoint recovery validation failed")
 
 finally:
     removed = delete_checkpoint(sid)

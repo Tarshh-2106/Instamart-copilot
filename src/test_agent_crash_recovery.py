@@ -31,10 +31,16 @@ def tracked_tool(name, args):
     tool_history.append(name)
     return result
 
-def crash_save(session_id, question, messages, step):
+def crash_save(
+    session_id, question, messages, step, scenario_id=None,
+    tokens_used=0, tool_history=None, model_calls=0
+):
     global save_count, crashed
 
-    path = original_save(session_id, question, messages, step)
+    path = original_save(
+        session_id, question, messages, step, scenario_id,
+        tokens_used, tool_history, model_calls
+    )
     save_count += 1
 
     if save_count == 3 and not crashed:

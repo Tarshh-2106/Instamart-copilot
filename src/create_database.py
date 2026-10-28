@@ -1,33 +1,20 @@
-
 import os
 import sqlite3
 import pandas as pd
 
-folder = "data/clean"
-db = "data/instamart.db"
-
-tables = {
-    "customers": "customers.csv",
-    "products": "products.csv",
-    "orders": "orders.csv",
-    "tickets": "tickets.csv"
-}
+DB = "data/instamart.db"
+TABLES = ("customers", "products", "orders")
 
 os.makedirs("data", exist_ok=True)
+with sqlite3.connect(DB) as connection:
+    connection.execute("DROP TABLE IF EXISTS tickets")
+    for table in TABLES:
+        frame = pd.read_csv(f"data/clean/{table}.csv")
+        if table == "orders":
+            frame["order_ts"] = pd.to_datetime(frame["order_ts"]).dt.strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
+        frame.to_sql(table, connection, if_exists="replace", index=False)
+        print(f"{table}: {len(frame)} rows loaded")
 
-con = sqlite3.connect(db)
-
-for table, file in tables.items():
-    path = os.path.join(folder, file)
-    d = pd.read_csv(path)
-    d.to_sql(table, con, if_exists="replace", index=False)
-    print(f"{table}: {len(d)} rows loaded")
-
-print("\nDatabase tables:")
-for row in con.execute(
-    "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
-):
-    print(row[0])
-
-con.close()
-print("\nDatabase setup complete.")
+print("Database setup complete.")

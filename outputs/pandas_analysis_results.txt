@@ -1,29 +1,53 @@
 
 DATASET SHAPES
-
-{'customers': (1200, 5), 'orders': (12965, 9), 'products': (40, 4), 'tickets': (164, 5)}
-
+{'customers': (1200, 5), 'orders': (12309, 9), 'products': (40, 4), 'tickets': (164, 5)}
 
 
-CUSTOMERS MISSING VALUES
+RAW CUSTOMERS SHAPE
+(1200, 5)
 
+
+RAW CUSTOMERS DTYPES
+customer_id        str
+city               str
+signup_date        str
+age            float64
+gender             str
+
+
+RAW CUSTOMERS MISSING COUNT
 customer_id     0
 city            0
 signup_date     0
 age            61
 gender         30
-dtype: int64
 
 
+RAW CUSTOMERS MISSING PERCENT
+customer_id    0.00
+city           0.00
+signup_date    0.00
+age            5.08
+gender         2.50
 
-CUSTOMERS DUPLICATE ROWS
 
-0
+RAW ORDERS SHAPE
+(13084, 9)
 
 
+RAW ORDERS DTYPES
+order_id                str
+customer_id             str
+product_id              str
+quantity              int64
+order_ts                str
+status                  str
+discount_pct          int64
+order_amount            str
+delivery_minutes    float64
 
-ORDERS MISSING VALUES
 
+RAW ORDERS MISSING COUNT
 order_id               0
 customer_id            0
 product_id             0
@@ -31,124 +55,152 @@ quantity               0
 order_ts               0
 status                 0
 discount_pct           0
-order_amount         118
-delivery_minutes    2629
-dtype: int64
+order_amount          53
+delivery_minutes    2541
 
 
-
-ORDERS DUPLICATE ROWS
-
-0
-
-
-
-PRODUCTS MISSING VALUES
-
-product_id      0
-product_name    0
-category        0
-price_inr       0
-dtype: int64
+RAW ORDERS MISSING PERCENT
+order_id             0.00
+customer_id          0.00
+product_id           0.00
+quantity             0.00
+order_ts             0.00
+status               0.00
+discount_pct         0.00
+order_amount         0.41
+delivery_minutes    19.42
 
 
-
-PRODUCTS DUPLICATE ROWS
-
-0
+RAW TICKETS SHAPE
+(164, 5)
 
 
+RAW TICKETS DTYPES
+ticket_id        str
+customer_id      str
+order_id         str
+text             str
+true_category    str
 
-TICKETS MISSING VALUES
 
+RAW TICKETS MISSING COUNT
 ticket_id        0
 customer_id      0
 order_id         8
 text             4
 true_category    0
-dtype: int64
 
 
+RAW TICKETS MISSING PERCENT
+ticket_id        0.00
+customer_id      0.00
+order_id         4.88
+text             2.44
+true_category    0.00
 
-TICKETS DUPLICATE ROWS
 
+CUSTOMERS MISSING VALUES
+customer_id    0
+city           0
+signup_date    0
+age            0
+gender         0
+
+
+CUSTOMERS DUPLICATE ROWS
 0
 
 
+ORDERS MISSING VALUES
+order_id               0
+customer_id            0
+product_id             0
+quantity               0
+order_ts               0
+status                 0
+discount_pct           0
+order_amount           0
+delivery_minutes    1199
+
+
+ORDERS DUPLICATE ROWS
+0
+
+
+PRODUCTS MISSING VALUES
+product_id      0
+product_name    0
+category        0
+price_inr       0
+
+
+PRODUCTS DUPLICATE ROWS
+0
+
+
+TICKETS MISSING VALUES
+ticket_id        0
+customer_id      0
+order_id         0
+text             0
+true_category    0
+
+
+TICKETS DUPLICATE ROWS
+0
+
 
 ORDER STATUS COUNTS
-
 status
 completed    11110
 cancelled     1199
-pending        656
-Name: count, dtype: int64
-
 
 
 ORDER AMOUNT SUMMARY
-
-count    12847.000000
-mean       269.740196
-std        432.290310
+count    12309.000000
+mean       270.696283
+std        433.600153
 min         12.000000
-25%         63.000000
+25%         63.750000
 50%        134.400000
 75%        296.650000
 max       3998.000000
-Name: order_amount, dtype: float64
-
 
 
 DELIVERY TIME SUMMARY
-
-count    10336.000000
-mean        27.547310
-std         13.205249
+count    11110.000000
+mean        27.372052
+std         12.753052
 min          8.000000
-25%         19.000000
+25%         20.000000
 50%         25.000000
-75%         32.000000
+75%         31.000000
 max         75.000000
-Name: delivery_minutes, dtype: float64
-
 
 
 TOTAL ORDER AMOUNT BY STATUS
-
 status
 cancelled     333331.75
-completed    2968622.15
-pending       163398.40
-Name: order_amount, dtype: float64
-
+completed    2998668.80
 
 
 AVERAGE DELIVERY TIME BY STATUS
-
 status
 cancelled      NaN
-completed    27.55
-pending        NaN
-Name: delivery_minutes, dtype: float64
-
+completed    27.37
 
 
 MONTHLY ORDER COUNTS
-
 order_ts
-2025-04    2156
-2025-05    2236
-2025-06    2059
-2025-07    2193
-2025-08    2197
-2025-09    2124
-dtype: int64
-
+2025-04    2049
+2025-05    2117
+2025-06    1958
+2025-07    2081
+2025-08    2096
+2025-09    2008
 
 
 TOP 10 CUSTOMERS BY COMPLETED ORDER AMOUNT
-
 customer_id
 C0693    14766.55
 C0291    13742.60
@@ -160,22 +212,48 @@ C0699    12471.80
 C0267    12210.25
 C0332    11806.40
 C0512    11617.65
-Name: order_amount, dtype: float64
-
 
 
 TOP 10 PRODUCTS BY QUANTITY
+   product_id  quantity            product_name category  price_inr
+20       P021       952  Instant Noodles 4 Pack   Snacks         56
+8        P009       913        Toned Milk 500ml    Dairy         29
+23       P024       912   Cold Coffee Can 180ml   Snacks         90
+22       P023       912      Peanut Butter 340g   Snacks        210
+3        P004       904        Sunflower Oil 1L  Grocery        155
+11       P012       885             Butter 100g    Dairy         58
+17       P018       883            Namkeen 200g   Snacks         60
+21       P022       862            Popcorn 100g   Snacks         45
+4        P005       861               Sugar 1kg  Grocery         48
+16       P017       857        Potato Chips 52g   Snacks         20
 
-   product_id  quantity  ... category price_inr
-20       P021       982  ...   Snacks        56
-8        P009       976  ...    Dairy        29
-22       P023       961  ...   Snacks       210
-23       P024       955  ...   Snacks        90
-3        P004       943  ...  Grocery       155
-17       P018       940  ...   Snacks        60
-11       P012       937  ...    Dairy        58
-6        P007       916  ...  Grocery       120
-4        P005       913  ...  Grocery        48
-21       P022       910  ...   Snacks        45
 
-[10 rows x 5 columns]
+CITY BY CATEGORY REVENUE PIVOT (INR)
+category       Dairy  Electronics    Grocery  Personal Care     Snacks         All
+city
+Bengaluru   87075.05    233909.45  110915.65       20193.85   71549.40   523643.40
+Chennai     78301.80    195508.80   93817.45       27675.40   68325.70   463629.15
+Delhi      117271.70    158549.10  112658.05       23471.50   90879.45   502829.80
+Hyderabad   83731.00    228913.10  109475.40       24800.05   81670.35   528589.90
+Mumbai      75209.85    214738.40   78970.15       38018.00   72122.10   479058.50
+Pune        90349.55    187629.25  108456.60       34275.15   80207.50   500918.05
+All        531938.95   1219248.10  614293.30      168433.95  464754.50  2998668.80
+
+
+PIVOT GRAND TOTAL (INR)
+2998668.8
+
+
+SQL GRAND TOTAL (INR)
+2998668.8
+
+
+COMPLETED DELIVERY AND CUSTOMER METRICS BY CITY
+           delivery_sum  delivery_mean  delivery_median  delivery_90th_percentile  customer_count
+city
+Bengaluru       51214.0          27.04             25.0                      41.0             192
+Chennai         46262.0          27.21             25.0                      39.0             187
+Delhi           57302.0          27.76             25.0                      42.7             205
+Hyderabad       50182.5          27.05             25.0                      42.0             187
+Mumbai          43983.0          27.27             25.0                      39.8             183
+Pune            55160.0          27.80             25.0                      45.0             221

@@ -1,0 +1,17 @@
+feature,coefficient
+num__frequency,-1.3227555065023606
+cat__favourite_category_Grocery,-0.2647184946013049
+cat__favourite_category_Snacks,-0.23723135515095797
+cat__favourite_category_Electronics,-0.19910139907255264
+cat__gender_male,-0.1571752805544278
+num__avg_order_value,-0.14437071263291795
+cat__city_Delhi,-0.1400070447887563
+cat__city_Mumbai,-0.08262691472583424
+cat__city_Chennai,-0.04229895736861625
+cat__gender_unknown,-0.019772445382533237
+cat__city_Hyderabad,-0.014982454116630328
+cat__city_Pune,0.02412322400266896
+num__age,0.026265048850582468
+num__recency,0.10287495961756318
+num__monetary,0.12604747472354222
+cat__favourite_category_Personal Care,0.23667175215737865

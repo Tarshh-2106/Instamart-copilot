@@ -1,47 +1,34 @@
-
-
 import os
 import sys
-import csv
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, root)
 os.chdir(root)
 
-import mock_llm
-from refund_agent import run_agent
+from refund_agent import run_agent, LAST_RUN
 
-with open("data/raw/agent_scenarios.csv", newline="", encoding="utf-8") as f:
-    rows = list(csv.DictReader(f))
+question = "Please refund order ORD-100048"
 
-row = next(r for r in rows if r["scenario_id"] == "S1")
-question = row["message"]
+token_result = run_agent(question, scenario_id="token_limit_demo", token_limit=1)
+token_status = token_result.startswith("FALLBACK_TOKEN_LIMIT:")
+print("Token-limit status:", token_result.split(":", 1)[0])
+print("Token-limit fallback:", token_status)
 
-original_chat = mock_llm.chat
+time_result = run_agent(
+    question, scenario_id="time_limit_demo", time_limit_seconds=0.0000000001
+)
+time_status = time_result.startswith("FALLBACK_TIME_LIMIT:")
+print("Time-limit status:", time_result.split(":", 1)[0])
+print("Time-limit fallback:", time_status)
 
-class TokenLimitError(Exception):
-    pass
+loop_result = run_agent(
+    "[LOOP] Refund order ORD-100048",
+    scenario_id="max_iterations_demo",
+    max_iterations=2,
+)
+iteration_status = loop_result.startswith("FALLBACK_MAX_ITERATIONS:")
+print("Iteration-limit status:", loop_result.split(":", 1)[0])
+print("Iteration-limit fallback:", iteration_status)
 
-def token_limit(*args, **kwargs):
-    raise TokenLimitError("Simulated token limit exceeded")
-
-def timeout(*args, **kwargs):
-    raise TimeoutError("Simulated agent timeout")
-
-try:
-    mock_llm.chat = token_limit
-    result1 = run_agent(question)
-    print("Token-limit response:", result1)
-    print("Token-limit fallback:", result1.startswith("SAFE_FALLBACK"))
-    print("Token-limit reason included:", "TokenLimitError" in result1)
-
-    mock_llm.chat = timeout
-    result2 = run_agent(question)
-    print("\nTimeout response:", result2)
-    print("Timeout fallback:", result2.startswith("SAFE_FALLBACK"))
-    print("Timeout reason included:", "TimeoutError" in result2)
-
-finally:
-    mock_llm.chat = original_chat
-
-print("\nOriginal mock restored:", mock_llm.chat is original_chat)
+if not (token_status and time_status and iteration_status):
+    raise AssertionError("A stop-safely demonstration did not reach its expected status")
